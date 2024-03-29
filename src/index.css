@@ -1,13 +1,37 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "nes-ui-react";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+html{
+  height: 100%;
+  background-color: #5182ff !important;
+}
+
+html.dark{
+  height: 100%;
+  background-color: #9a2079 !important;
+}
+
+body{
+  height: 100%;
+  background-image: url(./assets/DayBG.png);
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  image-rendering: pixelated;
+  margin: 0;
+  font-family: "Press Start 2P", system-ui;
+  font-style: normal;
+}
+
+body.dark{
+  background-image: url(./assets/NightBG.png);
 }
