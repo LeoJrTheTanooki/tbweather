@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { Navbar, NavbarLink } from "flowbite-react";
 import { Link, NavLink } from "react-router-dom";
 import mainLogo from "../assets/weathericons1.png";
 import images from "./images";
