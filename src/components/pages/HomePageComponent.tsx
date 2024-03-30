@@ -1,17 +1,12 @@
 import {
-  Badge,
-  Button,
   Container,
-  Heading,
   Input,
   Text,
-  setDarkModeActivation,
 } from "nes-ui-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import images from "../images";
 import { getWeather, getForecast } from "../../DataServices/DataService";
 import { IForecast, Iweather } from "../../Interfaces/Interfaces";
-import WeatherInfoComponent from "../WeatherInfoComponent";
 
 // Call a local storage item called dark-mode
 // If dark-mode is nonexistent, create the item and set its key to false
@@ -131,11 +126,6 @@ const HomePageComponent = () => {
   const navSearchValue = document.getElementById(
     "navSearchValue"
   ) as HTMLInputElement;
-
-  const testId = document.getElementById("testId") as HTMLInputElement;
-
-  // console.log(testId)
-
   const currentIcon = (iconCodeLocation: string) => {
     switch (iconCodeLocation) {
       case "01d":
@@ -207,7 +197,7 @@ const HomePageComponent = () => {
       setWeather(weatherData);
       setForecast(forecastData);
 
-      console.log(weatherData);
+      // console.log(weatherData);
       // console.log(forecastData);
 
       // Assigning to variables for readability
@@ -233,10 +223,6 @@ const HomePageComponent = () => {
       let forecastDay = new Date(
         (forecastList[0].dt + forecastData.city.timezone) * 1000
       ).getDay();
-
-      // console.log(todaysDay);
-
-      // console.log(forecastDay);
 
       if (forecastDay !== todaysDay + 1) {
         forecastList.shift();
@@ -269,20 +255,6 @@ const HomePageComponent = () => {
       setDtDay3((day3Data.dt + forecastData.city.timezone) * 1000);
       setDtDay4((day4Data.dt + forecastData.city.timezone) * 1000);
       setDtDay5((day5Data.dt + forecastData.city.timezone) * 1000);
-
-      //  + forecastData.city.timezone) * 1000
-
-      // console.log(forecastData.city.timezone)
-      // console.log(day2Data.dt * 1000);
-      // console.log((day2Data.dt + forecastData.city.timezone) * 1000);
-      // console.log(new Date((day2Data.dt + forecastData.city.timezone) * 1000).toString());
-      // console.log(new Date(day2Data.dt * 1000).toTimeString());
-      // console.log(new Date((day2Data.dt + forecastData.city.timezone) * 1000).getDay());
-      // console.log(new Date(day2Data.dt * 1000).getDay());
-      console.log(
-        new Date((weatherData.dt + weatherData.timezone) * 1000).getUTCHours()
-        //  .getHours()
-      );
     } else {
       setWeather(weatherDefault);
       setForecast(forecastDefault);

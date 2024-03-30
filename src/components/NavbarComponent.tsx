@@ -1,23 +1,17 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import mainLogo from "../assets/weathericons1.png";
 import images from "./images";
 import {
-  Badge,
   Button,
-  Colors,
   IconButton,
-  Input,
   Menu,
-  PixelBorder,
   PixelIcon,
   Spacer,
   Text,
   Toolbar,
-  isDarkModeActive,
-  onDarkModeChange,
   setDarkModeActivation,
 } from "nes-ui-react";
 

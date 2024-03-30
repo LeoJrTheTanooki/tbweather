@@ -1,16 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import HomePageComponent from "./components/pages/HomePageComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavbarComponent from "./components/NavbarComponent";
 import SearchPageComponent from "./components/pages/SearchPageComponent";
-import { setDarkModeActivation } from "nes-ui-react";
 import SavedLocationsPageComponent from "./components/pages/SavedLocationsPageComponent";
 
 function App() {
  
- 
+  console.log(process.env.REACT_APP_API_KEY)
 
   return (
     <>
