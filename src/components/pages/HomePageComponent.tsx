@@ -118,10 +118,10 @@ const HomePageComponent = () => {
   const [humDay4, setHumDay4] = useState<number>(0);
   const [humDay5, setHumDay5] = useState<number>(0);
 
-  const [dtDay2, setDtDay2] = useState<string>("");
-  const [dtDay3, setDtDay3] = useState<string>("");
-  const [dtDay4, setDtDay4] = useState<string>("");
-  const [dtDay5, setDtDay5] = useState<string>("");
+  const [dtDay2, setDtDay2] = useState<number>(0);
+  const [dtDay3, setDtDay3] = useState<number>(0);
+  const [dtDay4, setDtDay4] = useState<number>(0);
+  const [dtDay5, setDtDay5] = useState<number>(0);
 
   // The new document.getElementbyId
   const searchValue = document.getElementById(
@@ -195,6 +195,8 @@ const HomePageComponent = () => {
         return "Fri.";
       case 6:
         return "Sat.";
+      default:
+        return "???";
     }
   };
 
@@ -205,14 +207,14 @@ const HomePageComponent = () => {
       setWeather(weatherData);
       setForecast(forecastData);
 
-      // console.log(weatherData);
+      console.log(weatherData);
       // console.log(forecastData);
 
       // Assigning to variables for readability
-      let dayTestData = forecastData.list.filter((obj) => {
+      let forecastList = forecastData.list.filter((obj) => {
         let dateVar = new Date(
           (obj.dt + forecastData.city.timezone) * 1000
-        ).toTimeString();
+        ).toString();
         if (
           dateVar.includes("12:00:00") ||
           dateVar.includes("11:00:00") ||
@@ -224,38 +226,29 @@ const HomePageComponent = () => {
         }
       });
 
-      let day2Data = dayTestData[1];
+      let todaysDay = new Date(
+        (weatherData.dt + weatherData.timezone) * 1000
+      ).getDay();
 
-      // new Date((day2Data.dt + forecastData.city.timezone) * 1000).toTimeString()
+      let forecastDay = new Date(
+        (forecastList[0].dt + forecastData.city.timezone) * 1000
+      ).getDay();
 
-      // console.log(dayTestData);
+      // console.log(todaysDay);
 
-      // forecastData.list.forEach;
+      // console.log(forecastDay);
 
-      // console.log(
-      //   new Date(
-      //     (day2Data.dt + forecastData.city.timezone) * 1000
-      //   ).toTimeString()
-      // );
+      if (forecastDay !== todaysDay + 1) {
+        forecastList.shift();
+      }
 
-      // Plan to set clock to correct time(?)
-      // 1. Change dt_txt to dt
-      // 2. Add timezone_offset to dt
-      // 3. Convert new dt to readable time
-      // 4. See if new readable time incldes 12:00:00, if not 11:00:00 or 13:00:00, etc. ("12:00:00" || "11:00:00" || "13:00:00" || "10:00:00" || "14:00:00")
-      //                                                                                  Recommended to format like this since it checks 12 first and the next after if 12 isn't found
+      let day2Data = forecastList[0];
 
-      let day3Data = dayTestData[2];
+      let day3Data = forecastList[1];
 
-      let day4Data = dayTestData[3];
+      let day4Data = forecastList[2];
 
-      let day5Data = dayTestData[4];
-
-      // console.log(forecastData.list.findIndex((obj) => obj === day2));
-      // setDay2Index(forecastData.list.findIndex((obj) => obj === day2Data));
-      // setDay3Index(forecastData.list.findIndex((obj) => obj === day3Data));
-      // setDay4Index(forecastData.list.findIndex((obj) => obj === day4Data));
-      // setDay5Index(forecastData.list.findIndex((obj) => obj === day5Data));
+      let day5Data = forecastList[3];
 
       setIconDay2(day2Data.weather[0].icon);
       setIconDay3(day3Data.weather[0].icon);
@@ -272,18 +265,24 @@ const HomePageComponent = () => {
       setHumDay4(day4Data.main.humidity);
       setHumDay5(day5Data.main.humidity);
 
-      setDtDay2(day2Data.dt_txt);
-      setDtDay3(day3Data.dt_txt);
-      setDtDay4(day4Data.dt_txt);
-      setDtDay5(day5Data.dt_txt);
+      setDtDay2((day2Data.dt + forecastData.city.timezone) * 1000);
+      setDtDay3((day3Data.dt + forecastData.city.timezone) * 1000);
+      setDtDay4((day4Data.dt + forecastData.city.timezone) * 1000);
+      setDtDay5((day5Data.dt + forecastData.city.timezone) * 1000);
+
+      //  + forecastData.city.timezone) * 1000
 
       // console.log(forecastData.city.timezone)
       // console.log(day2Data.dt * 1000);
       // console.log((day2Data.dt + forecastData.city.timezone) * 1000);
-      // console.log(new Date((day2Data.dt + forecastData.city.timezone) * 1000).toTimeString());
+      // console.log(new Date((day2Data.dt + forecastData.city.timezone) * 1000).toString());
       // console.log(new Date(day2Data.dt * 1000).toTimeString());
       // console.log(new Date((day2Data.dt + forecastData.city.timezone) * 1000).getDay());
       // console.log(new Date(day2Data.dt * 1000).getDay());
+      console.log(
+        new Date((weatherData.dt + weatherData.timezone) * 1000).getUTCHours()
+        //  .getHours()
+      );
     } else {
       setWeather(weatherDefault);
       setForecast(forecastDefault);
@@ -303,10 +302,10 @@ const HomePageComponent = () => {
       setHumDay4(0);
       setHumDay5(0);
 
-      setDtDay2("???");
-      setDtDay3("???");
-      setDtDay4("???");
-      setDtDay5("???");
+      setDtDay2(0);
+      setDtDay3(0);
+      setDtDay4(0);
+      setDtDay5(0);
     }
   };
 
@@ -324,16 +323,16 @@ const HomePageComponent = () => {
       </div>
       <Container className="w-max">
         {/* <Input ref={inputRef} type="text" name="locationInput"></Input> */}
-        <div className="grid grid-cols-4 justify-items-center gap-y-8">
-          <div className="col-span-4 grid grid-cols-3 justify-items-start">
-            <div>
+        <div className="grid grid-cols-2 min-[460px]:grid-cols-4 justify-items-center gap-y-8">
+          <div className=" col-span-2 min-[460px]:col-span-4 grid md:grid-cols-3 justify-items-start gap-y-8 w-full">
+            <div className="order-2 md:order-1 justify-self-center">
               <img
                 className="h-64 w-64"
                 src={currentIcon(weather.weather[0].icon)}
                 alt="???"
               />
             </div>
-            <div className="???">
+            <div className="order-3 md:order-2 md:col-span-1 justify-self-center">
               <Text size="xlarge" className=" underline">
                 {weather && weather.name}, {weather && weather.sys.country}{" "}
               </Text>
@@ -347,15 +346,30 @@ const HomePageComponent = () => {
               </Text>
               <Text size="xlarge">HUM:{weather && weather.main.humidity}%</Text>
               <Text size="xlarge">
-                {weather && new Date(weather.dt * 1000).toLocaleDateString()}
+                {weather &&
+                  new Date(
+                    (weather.dt + weather.timezone) * 1000
+                  ).toDateString()}
+              </Text>
+              <Text size="xlarge">
+                {weather &&
+                  new Date(
+                    (weather.dt + weather.timezone) * 1000
+                  ).getUTCHours() +
+                    ":" +
+                    new Date(
+                      (weather.dt + weather.timezone) * 1000
+                    ).getUTCMinutes()}
               </Text>
             </div>
-            <div className=" justify-self-end">
-              <img
-                className="h-16 w-16 opacity-50"
-                src={images.unfavedIcon}
-                alt="???"
-              />
+            <div className="order-1 md:order-3 justify-self-end">
+              <a title="Favorites Coming Soon">
+                <img
+                  className="h-16 w-16 opacity-50"
+                  src={images.unfavedIcon}
+                  alt="???"
+                />
+              </a>
             </div>
           </div>
           <Container roundedCorners className="p-3 text-center flex flex-col">
@@ -432,8 +446,6 @@ const HomePageComponent = () => {
           </Container>
         </div>
       </Container>
-      Not too fond of being forced London's time zones... time currently set to
-      PDT
     </div>
   );
 };

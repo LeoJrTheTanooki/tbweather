@@ -92,6 +92,7 @@ const NavbarComponent = () => {
           />
         </IconButton>
         <a
+        title="Favorites Dropdown Coming Soon"
           className=" opacity-50"
           // onClick={() => setShowMoreMenu(true)}
         >
