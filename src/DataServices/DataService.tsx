@@ -1,9 +1,7 @@
 // require('dotenv').config()
 import { Iweather } from "../Interfaces/Interfaces";
 import { IForecast } from "../Interfaces/Interfaces";
-// import { apiKey } from "./environment";
-import { apiKey } from "./environment";
-// const apiKey = process.env.OPEN_WEATHER_API_KEY; 
+const apiKey = process.env.REACT_APP_API_KEY; 
 
 export const getWeather = async (location: string = 'stockton') => {
   const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=imperial`);

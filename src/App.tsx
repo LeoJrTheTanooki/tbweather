@@ -6,9 +6,6 @@ import SearchPageComponent from "./components/pages/SearchPageComponent";
 import SavedLocationsPageComponent from "./components/pages/SavedLocationsPageComponent";
 
 function App() {
- 
-  console.log(process.env.REACT_APP_API_KEY)
-
   return (
     <>
       <BrowserRouter>
